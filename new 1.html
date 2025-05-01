@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The Sprouted Kitchen</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        .topnav a {
+            margin-right: 15px;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .column {
+            flex: 33.33%;
+            padding: 20px;
+            border-radius: 25px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 5;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 15px;
+            width: 300px;
+        }
+
+        .close {
+            float: right;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Preloader -->
+    <div id="preloader" style="position:fixed; top:0; left:0; width:100%; height:100%; background:white; z-index:10; display:flex; align-items:center; justify-content:center;">
+        <div style="border:8px solid #f3f3f3; border-top:8px solid #3498db; border-radius:50%; width:60px; height:60px; animation: spin 1s linear infinite;"></div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            document.getElementById('preloader').style.display = 'none';
+        }
+    </script>
+
+    <!-- Login Button -->
+    <button onclick="document.getElementById('loginModal').style.display='block'" style="position:fixed; top:20px; right:20px;">Login</button>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="document.getElementById('loginModal').style.display='none'">&times;</span>
+            <h2>Login</h2>
+            <form action="#" method="post">
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="email" required><br><br>
+                <label for="password">Password:</label><br>
+                <input type="password" id="password" name="password" required><br><br>
+                <input type="submit" value="Login">
+            </form>
+            <p>Don't have an account? <a href="register.html">Register here</a></p>
+        </div>
+    </div>
+
+    <!-- Chatbot -->
+    <div id="chatbot" style="position:fixed; bottom:20px; right:20px; width:300px; background:#f1f1f1; padding:15px; border-radius:15px; box-shadow:0px 0px 10px rgba(0,0,0,0.2);">
+        <h4>Ask us anything!</h4>
+        <div id="chatbox" style="height:150px; overflow-y:auto; background:white; margin-bottom:10px; padding:5px; border:1px solid #ccc;"></div>
+        <input type="text" id="userInput" placeholder="Type your message..." style="width:75%;">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <main id="main">
+        <div class="topnav">
+            <a class="active" href="s2.html">How To Help</a>
+            <a href="s3.html">More Information</a>
+            <a href="s4.html">Testimonial</a>
+            <h1 id="title"></h1>
+            <h3><b>Taste the Best, Order with a Click</b></h3>
+        </div>
+
+        <!-- Food Images -->
+        <div class="row">
+            <div class="column"><img src="img4.jpg" alt="World split" style="width:100%"></div>
+            <div class="column"><img src="img10.jpg" alt="Melting Earth" style="width:100%"></div>
+            <div class="column"><img src="img6.jpg" alt="Climate Change Impact" style="width:100%"></div>
+        </div>
+
+        <!-- Product Information -->
+        <h2 id="headline">Influential Individuals Supporting Online Food Selling Reform</h2>
+        <div class="row">
+            <div class="column" style="background-color:rgb(87, 146, 97);">
+                <h4>Fresh Vegetables</h4>
+                <img src="img1.jpg" style="width:100%">
+                <p align="justify">Fresh vegetables are a cornerstone of a healthy diet...</p>
+                <div style="text-align:center; margin-top:10px;">
+                    <button onclick="addToCart('Fresh Vegetables')" style="background-color:#4CAF50; color:white; padding:8px 16px; margin:5px; border:none; border-radius:8px;">Add to Cart</button>
+                    <button onclick="likeItem(this)" style="background:none; border:none; font-size:24px; cursor:pointer;">❤️</button>
+                    <div style="margin-top:5px;">⭐ 4.5/5</div>
+                </div>
+            </div>
+            <div class="column" style="background-color:rgb(87, 146, 97);">
+                <h4>Delicious Fruits</h4>
+                <img src="img2.jpg" style="width:100%">
+                <p align="justify">Delicious fruits are nature's perfect combination of taste and nutrition...</p>
+                <div style="text-align:center; margin-top:10px;">
+                    <button onclick="addToCart('Fresh Vegetables')" style="background-color:#4CAF50; color:white; padding:8px 16px; margin:5px; border:none; border-radius:8px;">Add to Cart</button>
+                    <button onclick="likeItem(this)" style="background:none; border:none; font-size:24px; cursor:pointer;">❤️</button>
+                    <div style="margin-top:5px;">⭐ 5/5</div>
+                </div>
+            </div>
+			<div class="column" style="background-color:rgb(87, 146, 97);">
+                <h4>Oily Fries</h4>
+                <img src="img3.jpg" style="width:100%">
+                <p align="justify">Oily fries are a beloved comfort food, often enjoyed for their crispy texture..</p>
+                <div style="text-align:center; margin-top:10px;">
+                    <button onclick="addToCart('Fresh Vegetables')" style="background-color:#4CAF50; color:white; padding:8px 16px; margin:5px; border:none; border-radius:8px;">Add to Cart</button>
+                    <button onclick="likeItem(this)" style="background:none; border:none; font-size:24px; cursor:pointer;">❤️</button>
+                    <div style="margin-top:5px;">⭐ 4.6/5</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delivery Info -->
+        <section id="tribute-info">
+            <h3 id="headline">Significant points on Online Food Delivery System</h3>
+            <ul>
+                <li><b>Convenience:</b> Order food from home or work easily.</li>
+                <li><b>Variety:</b> Access a wide range of cuisines.</li>
+                <li><b>Ease of Use:</b> Simple interfaces and real-time tracking.</li>
+                <li><b>Time Efficiency:</b> Saves time for busy individuals.</li>
+                <li><b>Promotions:</b> Enjoy discounts and loyalty programs.</li>
+                <li><b>Customer Reviews:</b> Make informed choices.</li>
+                <li><b>Payment Options:</b> Multiple secure payment methods.</li>
+                <li><b>Hygiene:</b> Enhanced safety during COVID-19.</li>
+                <li><b>Analytics:</b> Data-driven customer service improvements.</li>
+                <li><b>Economic Impact:</b> Job creation and business support.</li>
+            </ul>
+            <blockquote>
+                <p>"We have a single mission: to protect and hand on the planet to the next generation"</p>
+                <cite>-- Francois Hollande</cite>
+            </blockquote>
+        </section>
+    </main>
+    <!-- Floating Cart Button -->
+    <button onclick="openCart()" style="position:fixed; bottom:100px; right:20px; padding:15px; background-color:#ff4747; color:white; border:none; border-radius:50%; font-size:20px; box-shadow: 0px 0px 10px gray;">🛒</button>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content" style="width:400px;">
+            <span class="close" onclick="closeCart()">&times;</span>
+            <h2>Your Cart</h2>
+            <ul id="cartItems" style="list-style:none; padding:0;"></ul>
+            <button onclick="checkout()" style="padding:10px 20px; margin-top:10px; background-color:green; color:white; border:none; border-radius:8px;">Checkout</button>
+        </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div style="text-align:center; margin:20px;">
+        <input type="text" id="searchBar" placeholder="Search for food..." style="padding:10px; width:50%; border-radius:10px;">
+        <button onclick="searchFood()" style="padding:10px 15px; border-radius:10px;">Search</button>
+    </div>
+
+    <!-- Delivery Location -->
+    <div style="text-align:center; margin-bottom:20px;">
+    <label for="location">Choose your delivery location:</label>
+    <select id="location" style="padding:10px; border-radius:10px;">
+        <option value="kolkata">Kolkata</option>
+        <option value="mumbai">Mumbai</option>
+        <option value="delhi">Delhi</option>
+        <option value="bangalore">Bangalore</option>
+    </select>
+</div>
+
+    <script>
+        let cart = [];
+
+        function addToCart(item) {
+            cart.push(item);
+            alert(item + " added to cart!");
+        }
+
+        function openCart() {
+            document.getElementById('cartModal').style.display = 'block';
+            updateCart();
+        }
+
+        function closeCart() {
+            document.getElementById('cartModal').style.display = 'none';
+        }
+
+        function updateCart() {
+            const cartList = document.getElementById('cartItems');
+            cartList.innerHTML = '';
+            cart.forEach((item, index) => {
+                cartList.innerHTML += `<li style="margin-bottom:10px;">${item} <button onclick="removeItem(${index})" style="margin-left:10px;">❌</button></li>`;
+            });
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        function checkout() {
+            const cartModal = document.getElementById('cartModal');
+            cartModal.style.display = 'none';
+
+            const tracker = document.createElement('div');
+            tracker.id = 'orderTracker';
+            tracker.style.position = 'fixed';
+            tracker.style.top = '30%';
+            tracker.style.left = '50%';
+            tracker.style.transform = 'translate(-50%, -50%)';
+            tracker.style.background = '#fff';
+            tracker.style.padding = '30px';
+            tracker.style.borderRadius = '15px';
+            tracker.style.boxShadow = '0px 0px 15px rgba(0,0,0,0.2)';
+            tracker.style.zIndex = '15';
+            tracker.innerHTML = `
+                <h3 style="margin-bottom:15px;">🚚 Tracking your Order...</h3>
+                <p id="trackStatus">🥘 Preparing your order...</p>
+            `;
+            document.body.appendChild(tracker);
+
+            const statuses = [
+                "🥘 Preparing your order...",
+                "🍱 Packing your delicious meal...",
+                "🛵 Delivery person picked up your order...",
+                "🚪 Almost at your doorstep...",
+                "✅ Delivered! Enjoy your meal!"
+            ];
+
+            let index = 0;
+            const statusText = document.getElementById('trackStatus');
+
+            const interval = setInterval(() => {
+                index++;
+                if (index < statuses.length) {
+                    statusText.innerHTML = statuses[index];
+                } else {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        document.body.removeChild(tracker);
+                        alert("Thank you for ordering with The Sprouted Kitchen! ❤️");
+                    }, 2000);
+                }
+            }, 2000);
+
+            cart = [];
+        }
+
+        function likeItem(button) {
+            button.innerHTML = "❤️ Liked!";
+            button.disabled = true;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const chatbox = document.getElementById('chatbox');
+            const message = input.value.trim().toLowerCase();
+            let response = "I'm just a chatbot here to help!";
+
+            if (message.includes("vegetable")) {
+                response = "We offer fresh, organic vegetables packed with nutrients!";
+            } else if (message.includes("fruit")) {
+                response = "Our fruits are juicy, healthy, and full of natural sweetness!";
+            } else if (message.includes("fries")) {
+                response = "Craving something crispy? Try our delicious oily fries!";
+            } else if (message.includes("delivery")) {
+                response = "We provide fast and hygienic online food delivery!";
+            } else if (message.includes("order")) {
+                response = "Ordering is easy—just a click away!";
+            } else if (message.includes("hello") || message.includes("hi")) {
+                response = "Hello! Welcome to The Sprouted Kitchen. How can I help you?";
+            } else if (message.includes("climate")) {
+                response = "We support eco-friendly food practices. Learn more on our page!";
+            }
+
+            if (message) {
+                chatbox.innerHTML += `<p><b>You:</b> ${input.value}</p>`;
+                chatbox.innerHTML += `<p><b>Bot:</b> ${response}</p>`;
+                input.value = '';
+                chatbox.scrollTop = chatbox.scrollHeight;
+            }
+        }
+    </script>
+</body>
+</html>
